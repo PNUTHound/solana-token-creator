@@ -24,10 +24,8 @@ import { FC, useCallback, useState } from "react";
 import { notify } from "../../utils/notifications";
 import { ClipLoader } from "react-spinners";
 import { useNetworkConfiguration } from "contexts/NetworkConfigurationProvider";
-//UI PART/
 import { AiOutlineClose } from "react-icons/ai";
 import { InputView } from "../index";
-import { FC } from "react";
 import CreateSVG from "../../components/SVG/CreateSVG";
 import Branding from "../../components/Branding";
 
@@ -158,7 +156,6 @@ export const CreateView: FC = ({ setOpenCreateModal }) => {
     }
   };
 
-  //---UPLOAD TO IPFS FUNCTION
   const uploadImagePinata = async (file) => {
     if (file) {
       try {
@@ -225,162 +222,118 @@ export const CreateView: FC = ({ setOpenCreateModal }) => {
   return (
     <>
       {isLoading && (
-        <div className="absolute top-0 left-0 z-50 flex h-screen w-full items-center justify-center bg-black/[.3] backdrop-blur-[10px]">
-          <ClipLoader />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
+            <ClipLoader color="#8B5CF6" size={50} />
+            <p className="mt-4 text-gray-700 dark:text-gray-300 font-medium">Creating your token...</p>
+          </div>
         </div>
       )}
 
       {!tokenMintAddress ? (
-        <section class="flex h-full  w-full items-center py-6 px-0  lg:p-10">
-          <div class="container ">
-            <div class="bg-default-950/40 mx-auto max-w-5xl rounded-2xl backdrop-blur-2xl">
-              <div class="grid gap-10 lg:grid-cols-2">
-                <div class="ps-4 hidden py-4 pt-10 lg:block">
-                  <div class="upload relative  w-full overflow-hidden rounded-xl">
-                    {token.image ? (
-                      <img src={token.image} alt="token" className="w-2/5" />
-                    ) : (
-                      <label for="file" class="custum-file-upload ">
-                        <div class="icon">
-                          <CreateSVG />
-                        </div>
-                        <div class="text">
-                          <span>Click to upload image</span>
-                        </div>
-                        <input
-                          id="file"
-                          onChange={handleImageChange}
-                          type="file"
-                        />
-                      </label>
-                    )}
-                  </div>
-                  <textarea
-                    onChange={(e) => handleFormFieldChange("description", e)}
-                    class="border-default-200 relative mt-48 block w-full w-full rounded border-white/10 bg-transparent py-1.5 px-3 text-white/80 focus:border-white/25 focus:ring-transparent"
-                    rows="6"
-                    placeholder="Description of your token..."
-                  ></textarea>
-                </div>
-
-                <div class="lg:ps-0 flex flex-col p-10">
-                  <div class="pb6 my-auto ">
-                    <h4 class="mb-4 mt-48 lg:mt-0 text-2xl font-bold text-white">
-                      Solana Token Creator
-                    </h4>
-                    <p class="text-default-300 mb-8 max-w-sm ">
-                      Kindly provide all the details about your token
-                    </p>
-
-                    <div class="text-start">
+        <section className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+          <div className="w-full max-w-6xl">
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
+              <div className="grid lg:grid-cols-2 gap-0">
+                {/* Left Side - Image Upload */}
+                <div className="p-8 lg:p-12 bg-gradient-to-br from-purple-500 to-blue-600 text-white">
+                  <div className="h-full flex flex-col justify-center">
+                    <div className="mb-8">
+                      <h3 className="text-2xl font-bold mb-2">Token Image</h3>
+                      <p className="text-purple-100">Upload your token's visual identity</p>
+                    </div>
+                    
+                    <div className="flex-1 flex items-center justify-center">
                       {token.image ? (
-                        <div class="flex lg:hidden  items-start justify-center">
-                          <img
-                            src={token.image}
-                            className="w-2/5"
-                            alt="token"
+                        <div className="relative group">
+                          <img 
+                            src={token.image} 
+                            alt="token" 
+                            className="w-48 h-48 rounded-2xl object-cover shadow-2xl"
                           />
-                        </div>
-                      ) : (
-                        <div class="messageBox">
-                          <div class="fileUploadWrapper">
-                            <label for="file">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 337 337"
-                              >
-                                <circle
-                                  stroke-width="20"
-                                  stroke="#6c6c6c"
-                                  fill="none"
-                                  r="158.5"
-                                  cy="168.5"
-                                  cx="168.5"
-                                ></circle>
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-width="25"
-                                  stroke="#6c6c6c"
-                                  d="M167.759 79V259"
-                                ></path>
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-width="25"
-                                  stroke="#6c6c6c"
-                                  d="M79 167.138H259"
-                                ></path>
-                              </svg>
-                              <span class="tooltip">Add an image</span>
+                          <div className="absolute inset-0 bg-black/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <label htmlFor="file" className="cursor-pointer bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg text-sm font-medium">
+                              Change Image
                             </label>
-                            <input
-                              onChange={handleImageChange}
-                              type="file"
-                              id="file"
-                              name="file"
-                            />
                           </div>
                         </div>
+                      ) : (
+                        <label htmlFor="file" className="cursor-pointer">
+                          <div className="w-48 h-48 border-2 border-dashed border-white/30 rounded-2xl flex flex-col items-center justify-center hover:border-white/50 transition-colors">
+                            <CreateSVG />
+                            <span className="mt-4 text-sm font-medium">Click to upload image</span>
+                          </div>
+                        </label>
                       )}
+                      <input
+                        id="file"
+                        onChange={handleImageChange}
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                      />
+                    </div>
 
+                    <div className="mt-8">
+                      <label className="block text-sm font-medium mb-2">Description</label>
                       <textarea
-                        onChange={(e) =>
-                          handleFormFieldChange("description", e)
-                        }
-                        class="border-default-200 mt-4 relative lg:hidden  block w-full w-full rounded border-white/10 bg-transparent py-1.5 px-3 text-white/80 focus:border-white/25 focus:ring-transparent"
-                        rows="3"
-                        placeholder="Description of your token..."
-                      ></textarea>
+                        onChange={(e) => handleFormFieldChange("description", e)}
+                        className="w-full h-24 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 resize-none"
+                        placeholder="Describe your token's purpose and utility..."
+                      />
+                    </div>
+                  </div>
+                </div>
 
+                {/* Right Side - Form */}
+                <div className="p-8 lg:p-12">
+                  <div className="h-full flex flex-col">
+                    <div className="mb-8">
+                      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        Create Solana Token
+                      </h2>
+                      <p className="text-gray-600 dark:text-gray-400">
+                        Fill in the details to create your custom Solana token
+                      </p>
+                    </div>
+
+                    <div className="flex-1 space-y-6">
                       <InputView
-                        name="Name"
-                        placeholder=" name"
+                        name="Token Name"
+                        placeholder="Enter token name"
                         clickhandle={(e) => handleFormFieldChange("name", e)}
                       />
                       <InputView
-                        name="Synbol"
-                        placeholder=" synbol"
+                        name="Symbol"
+                        placeholder="Enter token symbol"
                         clickhandle={(e) => handleFormFieldChange("symbol", e)}
                       />
                       <InputView
                         name="Decimals"
-                        placeholder="decimals"
-                        clickhandle={(e) =>
-                          handleFormFieldChange("decimals", e)
-                        }
+                        placeholder="Enter decimals (e.g., 9)"
+                        clickhandle={(e) => handleFormFieldChange("decimals", e)}
                       />
                       <InputView
-                        name="Amount"
-                        placeholder=" amount"
+                        name="Supply"
+                        placeholder="Enter total supply"
                         clickhandle={(e) => handleFormFieldChange("amount", e)}
                       />
 
-                      <div class="mb-6 text-center">
-                        <button
-                          onClick={() => createToken(token)}
-                          class="bg-primary-600/90 hover:bg-primary-600 group mt-5 inline-flex w-full items-center justify-center rounded-lg px-6 py-2 text-white backdrop-blur-2xl transition-all duration-500"
-                          type="submit"
-                        >
-                          <span class="fw-bold">Create Token</span>{" "}
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => createToken(token)}
+                        disabled={!token.name || !token.symbol || !token.decimals || !token.amount}
+                        className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] disabled:scale-100 disabled:cursor-not-allowed shadow-lg"
+                      >
+                        Create Token
+                      </button>
                     </div>
-                  </div>
-                  <div>
-                    <div class="text-center">
-                      <ul class="flex flex-wrap items-center justify-center gap-2">
-                        <li>
-                          <a
-                            onClick={() => setOpenCreateModal(false)}
-                            class="group inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-2xl transition-all duration-500 hover:bg-blue-600/60"
-                          >
-                            <i class="mdi mdi-facebook text-2xl text-white group-hover:text-white">
-                              <AiOutlineClose />
-                            </i>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
+
+                    <button
+                      onClick={() => setOpenCreateModal(false)}
+                      className="mt-6 w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-6 rounded-xl transition-colors"
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>
@@ -388,69 +341,70 @@ export const CreateView: FC = ({ setOpenCreateModal }) => {
           </div>
         </section>
       ) : (
-        <section class="flex w-full items-center py-6 px-0 lg:h-screen lg:p-10">
-          <div class="container">
-            <div class="bg-default-950/40 mx-auto max-w-5xl overflow-hidden rounded-2xl backdrop-blur-2xl">
-              <div class="grid gap-10 lg:grid-cols-2">
-                {/* //FIRST */}
-                <Branding
-                  image="auth-img"
-                  title="to build your marketing strategy"
-                  message="Try all paid functions for free. just register and
-                            create your first widget, it simple and fast."
-                />
-                {/* //SECOND */}
-                <div class="lg:ps-0 flex h-full flex-col p-10">
-                  <div class="pb-10">
-                    <a href="index.html" class="flex">
-                      <img
-                        src={"assets/images/logo.png"}
-                        alt="dark logo"
-                        class="h-10"
-                      />
-                    </a>
+        <section className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-green-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+          <div className="w-full max-w-4xl">
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
+              <div className="p-8 lg:p-12 text-center">
+                <div className="mb-8">
+                  <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
-                  <div class="my-auto pb-6 text-center">
-                    <h4 class="mb-4 text-2xl font-bold text-white">
-                      Link to your new token.
-                    </h4>
-                    <p class="text-default-300 mx-auto mb-5 max-w-sm">
-                      You are now successfully Create your solana token.
-                    </p>
-                    <div class="flex items-start justify-center">
-                      <img
-                        src={token.image || "assets/images/logo.png"}
-                        alt=""
-                        class="h-40"
-                      />
-                    </div>
-                    <div class="mt-5 w-full text-center">
-                      <p class="text-default-300 text-base font-medium leading-6">
-                        <InputView
-                          name="Token Address"
-                          placeholder={tokenMintAddress}
-                        />
-                        <span
-                          className="cursor-pointer"
-                          onClick={() =>
-                            navigator.clipboard.writeText(tokenMintAddress)
-                          }
-                        >
-                          Copy
-                        </span>
-                      </p>
-                      <div class="mb-6 text-center">
-                        <a
-                          href={`https://explorer.solana.com/address/${tokenMintAddress}?cluster=${networkConfiguration}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          class="bg-primary-600/90 hover:bg-primary-600 group mt-5 inline-flex w-full items-center justify-center rounded-lg px-6 py-2 text-white backdrop-blur-2xl transition-all duration-500"
-                        >
-                          <span class="fw-bold">View On Solana</span>{" "}
-                        </a>
-                      </div>
-                    </div>
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    Token Created Successfully!
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Your Solana token has been deployed to the blockchain
+                  </p>
+                </div>
+
+                <div className="mb-8">
+                  {token.image && (
+                    <img
+                      src={token.image}
+                      alt="Token"
+                      className="w-32 h-32 rounded-2xl object-cover mx-auto shadow-lg"
+                    />
+                  )}
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 mb-8">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Token Address
+                  </label>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="text"
+                      value={tokenMintAddress}
+                      readOnly
+                      className="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-gray-900 dark:text-white font-mono text-sm"
+                    />
+                    <button
+                      onClick={() => navigator.clipboard.writeText(tokenMintAddress)}
+                      className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg transition-colors"
+                    >
+                      Copy
+                    </button>
                   </div>
+                </div>
+
+                <div className="space-y-4">
+                  <a
+                    href={`https://explorer.solana.com/address/${tokenMintAddress}?cluster=${networkConfiguration}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-lg"
+                  >
+                    View on Solana Explorer
+                  </a>
+                  
+                  <button
+                    onClick={() => setOpenCreateModal(false)}
+                    className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-6 rounded-xl transition-colors"
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
             </div>

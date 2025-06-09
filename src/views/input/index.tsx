@@ -1,22 +1,15 @@
 import { FC } from "react";
 
-//INTERNAL IMPORT
-import { Input } from "../index";
-
 export const InputView: FC = ({ placeholder, name, clickhandle }) => {
   return (
-    <div class="mb-4">
-      <label
-        for="input-label"
-        class="text-base/normal text-default-200 mb-2 block font-semibold"
-      >
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
         {name}
       </label>
       <input
         type="text"
-        id="input-label"
         onChange={clickhandle}
-        class="border-default-200 block w-full rounded border-white/10 bg-transparent py-1.5 px-3 text-white/80 focus:border-white/25 focus:ring-transparent"
+        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
         placeholder={placeholder}
       />
     </div>

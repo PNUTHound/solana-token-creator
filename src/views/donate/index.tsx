@@ -2,7 +2,6 @@ import { FC, useEffect, useCallback, useState } from "react";
 import useUserSOLBalanceStore from "../../stores/useUserSOLBalanceStore";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { notify } from "../../utils/notifications";
-import { AiOutlineClose } from "react-icons/ai";
 import {
   Keypair,
   LAMPORTS_PER_SOL,
@@ -11,10 +10,7 @@ import {
   Transaction,
   TransactionSignature,
 } from "@solana/web3.js";
-
-//INTERNAL IMPORT
 import { InputView } from "../index";
-import Branding from "../../components/Branding";
 
 export const DonateView: FC = ({ setOpenSendTransaction }) => {
   const wallet = useWallet();
@@ -32,10 +28,8 @@ export const DonateView: FC = ({ setOpenSendTransaction }) => {
     }
   }, [wallet.publicKey, connection, getUserSOLBalance]);
 
-  const solInputValidation = async (e) => {
-    const monstrosity = /((^\.(\d+)?$)|(^\d+(\.\d*)?$)|(^$))/;
-    const res = new RegExp(monstrosity).exec(e.target.value);
-    res && setAmount(e.target.value);
+  const handleFormFieldChange = (fieldName, e) => {
+    setAmount(e.target.value);
   };
 
   const onClick = useCallback(async () => {
@@ -78,70 +72,96 @@ export const DonateView: FC = ({ setOpenSendTransaction }) => {
     }
   }, [publicKey, amount, sendTransaction, connection]);
 
-  //COMPONENT
-  const CloseModal = () => (
-    <a
-      onClick={() => setOpenSendTransaction(false)}
-      class="group mt-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-2xl transition-all duration-500 hover:bg-blue-600/60"
-    >
-      <i class="mdi mdi-facebook text-2xl text-white group-hover:text-white">
-        <AiOutlineClose />
-      </i>
-    </a>
-  );
-
   return (
-    <section class="flex w-full items-center py-6 px-0 lg:h-screen lg:p-10">
-      <div class="container">
-        <div class="bg-default-950/40 mx-auto max-w-5xl overflow-hidden rounded-2xl backdrop-blur-2xl">
-          <div class="grid gap-10 lg:grid-cols-2">
-            <Branding
-              image="auth-img"
-              title="to build your marketing strategy"
-              message="Try all paid functions for free. just register and
-                            create your first widget, it simple and fast."
-            />
-
-            <div class="lg:ps-0 flex h-full flex-col p-10">
-              <div class="pb-10">
-                <a href="index.html" class="flex">
-                  <img
-                    src={"assets/images/logo1.png"}
-                    alt="dark logo"
-                    class="h-10"
-                  />
-                </a>
-              </div>
-              <div class="my-auto pb-6 text-center">
-                <h4 class="mb-4 text-2xl font-bold text-white">
-                  {wallet && (
-                    <p>SOL Balance: {(balance || 0).toLocaleString()}</p>
-                  )}
-                </h4>
-                <p class="text-default-300 mx-auto mb-5 max-w-sm">
-                  You are now successfully Create your solana token.
-                </p>
-                <div class="flex items-start justify-center">
-                  <img src={"assets/images/logo1.png"} alt="" class="h-40" />
+    <section className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-green-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="w-full max-w-4xl">
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-0">
+            {/* Left Side - Branding */}
+            <div className="p-8 lg:p-12 bg-gradient-to-br from-green-500 to-blue-600 text-white">
+              <div className="h-full flex flex-col justify-center text-center">
+                <div className="mb-8">
+                  <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Support MGF DEV</h3>
+                  <p className="text-green-100">Send SOL to support our development</p>
                 </div>
-                <div class="text-start">
+                
+                <div className="space-y-4">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <h4 className="font-semibold mb-2">Secure Transfer</h4>
+                    <p className="text-sm text-green-100">
+                      All transactions are processed securely on the Solana blockchain.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <h4 className="font-semibold mb-2">Instant Processing</h4>
+                    <p className="text-sm text-green-100">
+                      Transactions are confirmed within seconds on Solana's fast network.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Transfer Interface */}
+            <div className="p-8 lg:p-12">
+              <div className="h-full flex flex-col justify-center">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    Send SOL
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Transfer SOL tokens securely
+                  </p>
+                </div>
+
+                {/* Balance Display */}
+                <div className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-6 mb-8">
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
+                      Available Balance
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                      {wallet.publicKey ? (balance || 0).toLocaleString() : "0"} SOL
+                    </p>
+                  </div>
+                </div>
+
+                {/* Transfer Form */}
+                <div className="space-y-6">
                   <InputView
-                    name="Amount"
-                    placeholder=" amount"
+                    name="Amount (SOL)"
+                    placeholder="Enter amount to send"
                     clickhandle={(e) => handleFormFieldChange("amount", e)}
                   />
+
+                  <button
+                    onClick={onClick}
+                    disabled={!publicKey || !amount || Number(amount) <= 0}
+                    className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] disabled:scale-100 disabled:cursor-not-allowed shadow-lg"
+                  >
+                    {!publicKey ? "Connect Wallet First" : "Send SOL"}
+                  </button>
+
+                  <button
+                    onClick={() => setOpenSendTransaction(false)}
+                    className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-6 rounded-xl transition-colors"
+                  >
+                    Cancel
+                  </button>
                 </div>
-                <div class="mt-5 w-full text-center">
-                  <div class="mb-6 text-center">
-                    <button
-                      onClick={onClick}
-                      disabled={!publicKey}
-                      class="bg-primary-600/90 hover:bg-primary-600 group mt-5 inline-flex w-full items-center justify-center rounded-lg px-6 py-2 text-white backdrop-blur-2xl transition-all duration-500"
-                    >
-                      <span class="fw-bold">Donate</span>{" "}
-                    </button>
-                    <CloseModal />
-                  </div>
+
+                {/* Info */}
+                <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+                  <p className="text-sm text-blue-800 dark:text-blue-200">
+                    <strong>Recipient:</strong> MGF DEV Development Fund<br/>
+                    Your contribution helps us build better tools for the Solana ecosystem.
+                  </p>
                 </div>
               </div>
             </div>

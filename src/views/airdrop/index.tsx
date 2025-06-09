@@ -5,10 +5,6 @@ import { LAMPORTS_PER_SOL, TransactionSignature } from "@solana/web3.js";
 import { notify } from "../../utils/notifications";
 import { AiOutlineClose } from "react-icons/ai";
 
-//INTERNAL IMPORT
-import { InputView } from "../index";
-import Branding from "../../components/Branding";
-
 export const AirdropView: FC = ({ setOpenAirdrop }) => {
   const wallet = useWallet();
   const { connection } = useConnection();
@@ -64,63 +60,90 @@ export const AirdropView: FC = ({ setOpenAirdrop }) => {
     }
   }, [publicKey, connection, getUserSOLBalance]);
 
-  //COMPONENT
-  const CloseModal = () => (
-    <a
-      onClick={() => setOpenAirdrop(false)}
-      class="group mt-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-2xl transition-all duration-500 hover:bg-blue-600/60"
-    >
-      <i class="mdi mdi-facebook text-2xl text-white group-hover:text-white">
-        <AiOutlineClose />
-      </i>
-    </a>
-  );
-
   return (
-    <section class="flex w-full items-center py-6 px-0 lg:h-screen lg:p-10">
-      <div class="container">
-        <div class="bg-default-950/40 mx-auto max-w-5xl overflow-hidden rounded-2xl backdrop-blur-2xl">
-          <div class="grid gap-10 lg:grid-cols-2">
-            <Branding
-              image="auth-img"
-              title="to build your marketing strategy"
-              message="Try all paid functions for free. just register and
-                            create your first widget, it simple and fast."
-            />
-
-            <div class="lg:ps-0 flex h-full flex-col p-10">
-              <div class="pb-10">
-                <a href="index.html" class="flex">
-                  <img
-                    src={"assets/images/logo1.png"}
-                    alt="dark logo"
-                    class="h-10"
-                  />
-                </a>
-              </div>
-              <div class="my-auto pb-6 text-center">
-                <h4 class="mb-4 text-2xl font-bold text-white">
-                  {wallet && (
-                    <p>SOL Balance: {(balance || 0).toLocaleString()}</p>
-                  )}
-                </h4>
-                <p class="text-default-300 mx-auto mb-5 max-w-sm">
-                  You are now successfully Create your solana token.
-                </p>
-                <div class="flex items-start justify-center">
-                  <img src={"assets/images/logout.svg"} alt="" class="h-40" />
-                </div>
-                <div class="mt-5 w-full text-center">
-                  <div class="mb-6 text-center">
-                    <button
-                      onClick={onClick}
-                      disabled={!publicKey}
-                      class="bg-primary-600/90 hover:bg-primary-600 group mt-5 inline-flex w-full items-center justify-center rounded-lg px-6 py-2 text-white backdrop-blur-2xl transition-all duration-500"
-                    >
-                      <span class="fw-bold">Airdrop 1</span>{" "}
-                    </button>
-                    <CloseModal />
+    <section className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="w-full max-w-4xl">
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-0">
+            {/* Left Side - Branding */}
+            <div className="p-8 lg:p-12 bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+              <div className="h-full flex flex-col justify-center text-center">
+                <div className="mb-8">
+                  <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                    </svg>
                   </div>
+                  <h3 className="text-2xl font-bold mb-2">MGF DEV Airdrop</h3>
+                  <p className="text-blue-100">Get free SOL for testing and development</p>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <h4 className="font-semibold mb-2">What is an Airdrop?</h4>
+                    <p className="text-sm text-blue-100">
+                      An airdrop provides free SOL tokens to your wallet for testing purposes on the Solana devnet.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <h4 className="font-semibold mb-2">Development Only</h4>
+                    <p className="text-sm text-blue-100">
+                      These tokens have no real value and are only for development and testing.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Airdrop Interface */}
+            <div className="p-8 lg:p-12">
+              <div className="h-full flex flex-col justify-center">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    Request Airdrop
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Get 1 SOL for testing your applications
+                  </p>
+                </div>
+
+                {/* Balance Display */}
+                <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-6 mb-8">
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
+                      Current Balance
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                      {wallet.publicKey ? (balance || 0).toLocaleString() : "0"} SOL
+                    </p>
+                  </div>
+                </div>
+
+                {/* Airdrop Button */}
+                <div className="space-y-4">
+                  <button
+                    onClick={onClick}
+                    disabled={!publicKey}
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] disabled:scale-100 disabled:cursor-not-allowed shadow-lg"
+                  >
+                    {!publicKey ? "Connect Wallet First" : "Request 1 SOL Airdrop"}
+                  </button>
+
+                  <button
+                    onClick={() => setOpenAirdrop(false)}
+                    className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-6 rounded-xl transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+
+                {/* Info */}
+                <div className="mt-8 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl">
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                    <strong>Note:</strong> Airdrops are only available on devnet and testnet. 
+                    Make sure your wallet is connected to the correct network.
+                  </p>
                 </div>
               </div>
             </div>
