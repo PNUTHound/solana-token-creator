@@ -224,7 +224,7 @@ export const CreateView: FC = ({ setOpenCreateModal }) => {
       {isLoading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
-            <ClipLoader color="#8B5CF6" size={50} />
+            <ClipLoader color="#8B5CF6\" size={50} />
             <p className="mt-4 text-gray-700 dark:text-gray-300 font-medium">Creating your token...</p>
           </div>
         </div>
