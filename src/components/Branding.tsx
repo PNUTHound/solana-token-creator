@@ -1,22 +1,40 @@
 import { FC } from "react";
 
-const Branding: FC = ({ image, title, message }) => {
+interface BrandingProps {
+  image: string;
+  title: string;
+  message: string;
+}
+
+const Branding: FC<BrandingProps> = ({ image, title, message }) => {
   return (
-    <div class="ps-4 hidden py-4 lg:block">
-      <div class="relative h-full w-full overflow-hidden rounded-xl">
+    <div className="hidden lg:block p-8">
+      <div className="relative h-full w-full overflow-hidden rounded-3xl bg-gradient-to-br from-purple-600 to-blue-600">
+        <div className="absolute inset-0 bg-black/20"></div>
         <img
           src={`assets/images/ai/${image}.jpg`}
-          alt=""
-          class="h-full w-full -scale-x-100 transform"
+          alt="MGF DEV Branding"
+          className="h-full w-full object-cover opacity-30"
         />
-        <div class="bg-default-950/40 absolute inset-0">
-          <div class="flex h-full items-end justify-center">
-            <div class="text-start p-6">
-              <h5 class="mb-3 text-xl font-bold text-white">
-                Solana Token Creator, <br />
-                {title}!
-              </h5>
-              <p class="text-default-400 text-base font-medium">{message}</p>
+        <div className="absolute inset-0 flex items-end">
+          <div className="p-8 text-white">
+            <div className="mb-6">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold">M</span>
+              </div>
+            </div>
+            <h3 className="text-2xl font-bold mb-4 leading-tight">
+              MGF DEV Token Creator
+              <br />
+              <span className="text-purple-200">{title}</span>
+            </h3>
+            <p className="text-purple-100 leading-relaxed max-w-md">
+              {message}
+            </p>
+            <div className="mt-6 flex items-center space-x-4">
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+              <div className="w-2 h-2 bg-white/60 rounded-full"></div>
+              <div className="w-2 h-2 bg-white/30 rounded-full"></div>
             </div>
           </div>
         </div>

@@ -1,101 +1,133 @@
-import { FC } from "react";
-import pkg from "../../../package.json";
+import { FC, useState } from "react";
+import { LuChevronDown, LuHelpCircle } from "react-icons/lu";
 
-export const FaqView: FC = ({}) => {
-  const question = [
+export const FaqView: FC = () => {
+  const [openFaq, setOpenFaq] = useState(null);
+
+  const faqs = [
     {
-      question: " Who are produces sit pleasure?",
-      answer:
-        " Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
+      question: "What is MGF DEV Token Creator?",
+      answer: "MGF DEV Token Creator is a comprehensive platform for creating, deploying, and managing Solana tokens without any coding knowledge. Our platform provides professional-grade tools for developers, creators, and businesses.",
       id: "faq-1",
     },
     {
-      question: " What is quo voluptas nulla pariatur?",
-      answer:
-        "Vivamus elementum semper nisi. Aenean vulputate eleifendtellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.",
+      question: "How much does it cost to create a token?",
+      answer: "Creating a token requires only the network fees for deploying to the Solana blockchain. Our platform is free to use, you only pay the minimal Solana transaction fees which are typically less than $0.01.",
       id: "faq-2",
     },
     {
-      question: "How to do transactions using iMbank?",
-      answer:
-        " Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
+      question: "Do I need coding experience to create tokens?",
+      answer: "No coding experience is required! Our intuitive interface allows anyone to create professional Solana tokens. Simply fill in your token details, upload an image, and deploy with one click.",
       id: "faq-3",
     },
     {
-      question: " hot to activate iMbank service?",
-      answer:
-        "Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
+      question: "What networks are supported?",
+      answer: "We support Solana mainnet, devnet, and testnet. You can easily switch between networks using our network selector. We recommend testing on devnet before deploying to mainnet.",
       id: "faq-4",
     },
     {
-      question: "  Who is eligible to open iMbank account?",
-      answer:
-        "Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
+      question: "Can I update my token metadata after creation?",
+      answer: "Token metadata can be updated if you maintain update authority during creation. Our platform provides tools to view and analyze token metadata, and update it when possible.",
       id: "faq-5",
     },
     {
-      question: "wil i be given a passbook?",
-      answer:
-        "Aenean commodo ligula eget dolor. Aenean massa. Cum sociisnatoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
+      question: "Is my wallet secure when using MGF DEV?",
+      answer: "Yes, we use industry-standard wallet adapters and never store your private keys. All transactions are signed locally in your wallet, ensuring maximum security for your assets.",
       id: "faq-6",
     },
+    {
+      question: "What file formats are supported for token images?",
+      answer: "We support all common image formats including PNG, JPG, JPEG, GIF, and SVG. Images are automatically optimized and stored on IPFS for decentralized access.",
+      id: "faq-7",
+    },
+    {
+      question: "How can I get support if I need help?",
+      answer: "We offer 24/7 community support through our contact form, documentation, and community channels. Our team is always ready to help you succeed with your token projects.",
+      id: "faq-8",
+    },
   ];
+
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
   return (
-    <section id="faq" class="py-20">
-      <div class="container">
-        <div class="mb-10 flex items-end justify-between">
-          <div class="mx-auto max-w-2xl text-center">
-            <h2 class="mb-4 text-3xl font-medium capitalize text-white">
-              Any questions
-            </h2>
-            <p class="text-default-200 text-sm font-medium">
-              Start working with Tailwindcss It allows you to compose complex
-              designs <br />
-              by combining and customizing utility classes..
-            </p>
+    <section id="faq" className="py-20 bg-gray-50 dark:bg-gray-900/50">
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 rounded-full mb-6">
+            <span className="text-purple-600 dark:text-purple-400 text-sm font-semibold uppercase tracking-wider">
+              FREQUENTLY ASKED QUESTIONS
+            </span>
           </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            Got Questions?
+            <span className="block bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              We Have Answers
+            </span>
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Find answers to common questions about MGF DEV Token Creator. 
+            Can't find what you're looking for? Contact our support team.
+          </p>
         </div>
 
-        <div class="mx-auto max-w-3xl">
-          <div class="hs-accordion-group space-y-4">
-            {question.map((question, index) => (
+        {/* FAQ Grid */}
+        <div className="max-w-4xl mx-auto">
+          <div className="grid gap-6">
+            {faqs.map((faq, index) => (
               <div
-                key={index}
-                class={`hs-accordion bg-default-950/40   overflow-hidden rounded-lg border border-white/10 backdrop-blur-3xl`}
-                id={question.id}
+                key={faq.id}
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:shadow-xl"
               >
                 <button
-                  class="hs-accordion-toggle inline-flex w-full items-center justify-between gap-x-3 px-6 py-4 text-left capitalize text-white transition-all"
-                  aria-controls={`faq-accordion-${index + 1}`}
+                  onClick={() => toggleFaq(index)}
+                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                 >
-                  <h5 class="flex text-base font-semibold">
-                    <i
-                      data-lucide="help-circle"
-                      class="me-3 h-5 w-5 stroke-white align-middle"
-                    ></i>
-                    {question.question}
-                  </h5>
-                  <i
-                    data-lucide="chevron-up"
-                    class="hs-accordion-active:-rotate-180 h-4 w-4 transition-all duration-500"
-                  ></i>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center text-white">
+                      <LuHelpCircle className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {faq.question}
+                    </h3>
+                  </div>
+                  <LuChevronDown 
+                    className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-300 ${
+                      openFaq === index ? 'rotate-180' : ''
+                    }`}
+                  />
                 </button>
-                <div
-                  id={`faq-accordion-${index + 1}`}
-                  class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-                  aria-labelledby={question.id}
-                >
-                  <div class="px-6 pb-4 pt-0">
-                    <p class="text-default-300 mb-2 text-sm font-medium">
-                      {question.answer}
-                    </p>
-                    <p class="text-default-300 text-sm font-medium">
-                      Have you ever wanted to become Blockchain Developer ? .
-                    </p>
+                
+                <div className={`overflow-hidden transition-all duration-300 ${
+                  openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}>
+                  <div className="px-8 pb-6">
+                    <div className="pl-14">
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center mt-16">
+          <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-3xl p-8 lg:p-12 text-white">
+            <h3 className="text-3xl font-bold mb-4">
+              Still Have Questions?
+            </h3>
+            <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+              Our support team is here to help you succeed with your token creation journey.
+            </p>
+            <button className="bg-white text-purple-600 font-semibold px-8 py-4 rounded-2xl hover:bg-gray-100 transition-colors transform hover:scale-105 duration-300">
+              Contact Support
+            </button>
           </div>
         </div>
       </div>

@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-  CheckCircleIcon,
-  InformationCircleIcon,
-  XCircleIcon,
-} from "@heroicons/react/outline";
-import { XIcon } from "@heroicons/react/solid";
+import { LuCheckCircle, LuInfo, LuXCircle, LuX, LuExternalLink } from "react-icons/lu";
 import useNotificationStore from "../stores/useNotificationStore";
 import { useConnection } from "@solana/wallet-adapter-react";
-import { getExplorerUrl } from "../utils/explorer";
 import { useNetworkConfiguration } from "contexts/NetworkConfigurationProvider";
-
-//INTERNAL IMPORT
-import NotificationSVG from "./SVG/NotificationSVG";
 
 const NotificationList = () => {
   const { notifications, set: setNotificationStore } = useNotificationStore(
@@ -21,10 +12,8 @@ const NotificationList = () => {
   const reversedNotifications = [...notifications].reverse();
 
   return (
-    <div
-      className={`pointer-events-none fixed inset-0 z-20 flex items-end px-4 py-6 sm:p-6`}
-    >
-      <div className={`flex w-full flex-col`}>
+    <div className="pointer-events-none fixed inset-0 z-50 flex items-end px-4 py-6 sm:p-6">
+      <div className="flex w-full flex-col space-y-4">
         {reversedNotifications.map((n, idx) => (
           <Notification
             key={`${n.message}${idx}`}
@@ -62,60 +51,97 @@ const Notification = ({ type, message, description, txid, onHide }) => {
     };
   }, [onHide]);
 
+  const getIcon = () => {
+    switch (type) {
+      case "success":
+        return <LuCheckCircle className="w-6 h-6 text-green-500" />;
+      case "info":
+        return <LuInfo className="w-6 h-6 text-blue-500" />;
+      case "error":
+        return <LuXCircle className="w-6 h-6 text-red-500" />;
+      default:
+        return <LuInfo className="w-6 h-6 text-blue-500" />;
+    }
+  };
+
+  const getBorderColor = () => {
+    switch (type) {
+      case "success":
+        return "border-green-500/20";
+      case "info":
+        return "border-blue-500/20";
+      case "error":
+        return "border-red-500/20";
+      default:
+        return "border-blue-500/20";
+    }
+  };
+
   return (
-    <div
-      className={`bg-bkg-1 pointer-events-auto z-50  mx-4 mt-2 mb-12 w-full max-w-sm overflow-hidden rounded-md bg-[#0A1023] p-2 shadow-lg ring-1 `}
-    >
-      <div className={`p-4`}>
-        <div className={`flex items-center`}>
-          <div className={`flex-shrink-0`}>
-            {type === "success" ? (
-              <CheckCircleIcon className={`text-success mr-1 h-8 w-8`} />
-            ) : null}
-            {type === "info" && (
-              <InformationCircleIcon className={`text-info mr-1 h-8 w-8`} />
-            )}
-            {type === "error" && (
-              <XCircleIcon className={`text-error mr-1 h-8 w-8`} />
-            )}
-          </div>
-          <div className={`ml-2 w-0 flex-1`}>
-            <div className={`text-fgd-1 font-bold`}>{message}</div>
-            {description ? (
-              <p className={`text-fgd-2 mt-0.5 text-sm`}>{description}</p>
-            ) : null}
-            {txid ? (
-              <div className="flex flex-row">
-                <a
-                  href={
-                    "https://explorer.solana.com/tx/" +
-                    txid +
-                    `?cluster=${networkConfiguration}`
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                  className="link-accent link flex flex-row"
-                >
-                  <NotificationSVG />
-                  <div className="mx-4 flex">
-                    {txid.slice(0, 8)}...
-                    {txid.slice(txid.length - 8)}
-                  </div>
-                </a>
-              </div>
-            ) : null}
-          </div>
-          <div className={`ml-4 flex flex-shrink-0 self-start`}>
+    <div className={`pointer-events-auto w-full max-w-sm mx-auto`}>
+      <div className={`bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border-2 ${getBorderColor()} backdrop-blur-xl overflow-hidden`}>
+        <div className="p-4">
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0 mt-0.5">
+              {getIcon()}
+            </div>
+            
+            <div className="flex-1 min-w-0">
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white">
+                {message}
+              </h4>
+              {description && (
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                  {description}
+                </p>
+              )}
+              {txid && (
+                <div className="mt-3">
+                  <a
+                    href={`https://explorer.solana.com/tx/${txid}?cluster=${networkConfiguration}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center space-x-2 text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
+                  >
+                    <LuExternalLink className="w-4 h-4" />
+                    <span>View Transaction</span>
+                  </a>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 font-mono">
+                    {txid.slice(0, 8)}...{txid.slice(-8)}
+                  </p>
+                </div>
+              )}
+            </div>
+            
             <button
-              onClick={() => onHide()}
-              className={`bg-bkg-2 default-transition text-fgd-3 hover:text-fgd-4 inline-flex rounded-md focus:outline-none`}
+              onClick={onHide}
+              className="flex-shrink-0 p-1 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
-              <span className={`sr-only`}>Close</span>
-              <XIcon className="h-5 w-5" />
+              <LuX className="w-4 h-4" />
             </button>
           </div>
         </div>
+        
+        {/* Progress bar */}
+        <div className="h-1 bg-gray-200 dark:bg-gray-700">
+          <div 
+            className={`h-full ${
+              type === 'success' ? 'bg-green-500' : 
+              type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            } animate-pulse`}
+            style={{
+              animation: 'shrink 8s linear forwards'
+            }}
+          ></div>
+        </div>
       </div>
+      
+      <style jsx>{`
+        @keyframes shrink {
+          from { width: 100%; }
+          to { width: 0%; }
+        }
+      `}</style>
     </div>
   );
 };
