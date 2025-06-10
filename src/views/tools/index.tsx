@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { MdGeneratingTokens } from "react-icons/md";
-import { IoIosArrowRoundForward } from "react-icons/io";
+import { MdGeneratingTokens, MdToken, MdContactMail } from "react-icons/md";
+import { RiTokenSwapFill, RiAirplayFill } from "react-icons/ri";
+import { RxTokens } from "react-icons/rx";
+import { FaRocket, FaChartLine } from "react-icons/fa";
 import { LuArrowRightFromLine } from "react-icons/lu";
-
-import pkg from "../../../package.json";
 
 export const ToolView: FC = ({
   setOpenTokenMetaData,
@@ -17,109 +17,119 @@ export const ToolView: FC = ({
       name: "Create Token",
       icon: <MdGeneratingTokens />,
       function: setOpenCreateModal,
+      color: "from-purple-500 to-pink-500",
+      description: "Launch your custom Solana token"
     },
     {
       name: "Token Metadata",
-      icon: <MdGeneratingTokens />,
+      icon: <RxTokens />,
       function: setOpenTokenMetaData,
+      color: "from-blue-500 to-cyan-500",
+      description: "View and analyze token information"
     },
     {
       name: "Contact Us",
-      icon: <MdGeneratingTokens />,
+      icon: <MdContactMail />,
       function: setOpenContact,
+      color: "from-green-500 to-emerald-500",
+      description: "Get support from our team"
     },
     {
       name: "Airdrop",
-      icon: <MdGeneratingTokens />,
+      icon: <RiAirplayFill />,
       function: setOpenAirdrop,
+      color: "from-yellow-500 to-orange-500",
+      description: "Get free SOL for testing"
     },
     {
       name: "Send Transaction",
-      icon: <MdGeneratingTokens />,
+      icon: <RiTokenSwapFill />,
       function: setOpenSendTransaction,
+      color: "from-indigo-500 to-purple-500",
+      description: "Transfer SOL securely"
     },
     {
-      name: "Buddy Tokens",
-      icon: <MdGeneratingTokens />,
+      name: "Token Explorer",
+      icon: <FaChartLine />,
       function: setOpenCreateModal,
+      color: "from-red-500 to-pink-500",
+      description: "Explore Solana tokens"
     },
     {
-      name: "Top Tokens",
-      icon: <MdGeneratingTokens />,
+      name: "Portfolio Tracker",
+      icon: <MdToken />,
       function: setOpenCreateModal,
+      color: "from-teal-500 to-blue-500",
+      description: "Track your token portfolio"
     },
     {
-      name: "Solana Explore",
-      icon: <MdGeneratingTokens />,
+      name: "Launch Pad",
+      icon: <FaRocket />,
       function: setOpenCreateModal,
+      color: "from-violet-500 to-purple-500",
+      description: "Launch your token project"
     },
   ];
+
   return (
-    <section id="tools" class="py-20">
-      <div class="container">
-        <div class="mb-10 flex items-end justify-between">
-          <div class="mx-auto max-w-2xl text-center">
-            <h2 class="mb-4 text-3xl font-medium capitalize text-white">
-              Solana Powerfull Tools
-            </h2>
-            <p class="text-default-200 text-sm font-medium">
-              Start working with Solana Token Creator, It allows you to create
-              solana token <br />
-              by Creating, deploying, airdrop, transfering and updating
-              metadata.
-            </p>
+    <section id="tools" className="py-20 bg-gray-50 dark:bg-gray-900/50">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 rounded-full mb-6">
+            <span className="text-purple-600 dark:text-purple-400 text-sm font-semibold uppercase tracking-wider">
+              MGF DEV TOOLS
+            </span>
           </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            Powerful Solana Tools
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Complete toolkit for Solana token creation, management, and deployment. 
+            Build, deploy, and manage your tokens with professional-grade tools.
+          </p>
         </div>
 
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {tools.map((tool, index) => (
             <div
+              key={tool.name}
               onClick={() => tool.function(true)}
-              class="bg-default-950/40 rounded-xl backdrop-blur-3xl"
+              className="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-200 dark:border-gray-700 overflow-hidden"
             >
-              <div class="p-6">
-                <div class="mb-4 flex items-center gap-4">
-                  <div
-                    class={`inline-flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/20 ${
-                      index == 0
-                        ? "text-red-500"
-                        : index == 1
-                        ? "text-sky-500"
-                        : index == 2
-                        ? "text-indigo-500"
-                        : index == 3
-                        ? " text-yellow-500"
-                        : "text-teal-500"
-                    } `}
-                  >
-                    <i data-lucide="dribbble" class="">
-                      {tool.icon}
-                    </i>
-                  </div>
-                  <h3 class="text-default-200 text-xl font-medium">
-                    {tool.name}
-                  </h3>
-                </div>
-
-                <a class="text-primary group relative inline-flex items-center gap-2">
-                  <span class="bg-primary/80 absolute -bottom-0 h-px w-7/12 rounded transition-all duration-500 group-hover:w-full"></span>
-                  Select & try{" "}
-                  <i data-lucide="move-right">
-                    <LuArrowRightFromLine />
-                  </i>
-                </a>
+              {/* Background Gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${tool.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+              
+              {/* Icon */}
+              <div className={`inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-r ${tool.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                {tool.icon}
               </div>
+
+              {/* Content */}
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                {tool.name}
+              </h3>
+              
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                {tool.description}
+              </p>
+
+              {/* Action */}
+              <div className="flex items-center text-purple-600 dark:text-purple-400 font-medium text-sm group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors">
+                <span>Try Now</span>
+                <LuArrowRightFromLine className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </div>
+
+              {/* Hover Effect */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             </div>
           ))}
         </div>
 
-        <div class="mt-10 flex justify-center">
-          <a class="hover:bg-primary-hover bg-primary inline-flex items-center justify-center gap-2 rounded-full px-6 py-2 text-white transition-all duration-300">
-            More Tools{" "}
-            <i data-lucide="move-right" class="">
-              <IoIosArrowRoundForward />
-            </i>
-          </a>
+        <div className="text-center mt-12">
+          <button className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold px-8 py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <span>Explore All Tools</span>
+            <LuArrowRightFromLine className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>
