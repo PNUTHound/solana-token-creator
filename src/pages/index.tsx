@@ -12,6 +12,7 @@ import {
   ContactView,
   AirdropView,
   DonateView,
+  UpdateMetadataView,
 } from "../views";
 
 const Home: NextPage = (props) => {
@@ -20,6 +21,8 @@ const Home: NextPage = (props) => {
   const [openContact, setOpenContact] = useState(false);
   const [openAirdrop, setOpenAirdrop] = useState(false);
   const [openSendTransaction, setOpenSendTransaction] = useState(false);
+  const [openUpdateMetadata, setOpenUpdateMetadata] = useState(false);
+  
   return (
     <>
       <Head>
@@ -33,6 +36,7 @@ const Home: NextPage = (props) => {
         setOpenContact={setOpenContact}
         setOpenAirdrop={setOpenAirdrop}
         setOpenSendTransaction={setOpenSendTransaction}
+        setOpenUpdateMetadata={setOpenUpdateMetadata}
       />
       <FeatureView
         setOpenCreateModal={setOpenCreateModal}
@@ -61,14 +65,22 @@ const Home: NextPage = (props) => {
           <ContactView setOpenContact={setOpenContact} />
         </div>
       )}
+      
       {openAirdrop && (
         <div className="new_loader relative h-full bg-slate-900">
           <AirdropView setOpenAirdrop={setOpenAirdrop} />
         </div>
       )}
+      
       {openSendTransaction && (
         <div className="new_loader relative h-full bg-slate-900">
           <DonateView setOpenSendTransaction={setOpenSendTransaction} />
+        </div>
+      )}
+
+      {openUpdateMetadata && (
+        <div className="new_loader relative h-full bg-slate-900">
+          <UpdateMetadataView setOpenUpdateMetadata={setOpenUpdateMetadata} />
         </div>
       )}
     </>

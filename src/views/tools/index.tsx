@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { LuRocket, LuCoins, LuSend, LuFileText, LuMail, LuGift, LuArrowRight, LuCheckCircle, LuZap, LuShield } from "react-icons/lu";
+import { LuRocket, LuCoins, LuSend, LuFileText, LuMail, LuGift, LuArrowRight, LuCheckCircle, LuZap, LuShield, LuEdit } from "react-icons/lu";
 
 export const ToolView: FC = ({
   setOpenCreateModal,
@@ -7,6 +7,7 @@ export const ToolView: FC = ({
   setOpenContact,
   setOpenAirdrop,
   setOpenSendTransaction,
+  setOpenUpdateMetadata,
 }) => {
   const tools = [
     {
@@ -17,6 +18,15 @@ export const ToolView: FC = ({
       color: "from-purple-500 to-pink-500",
       features: ["Custom Metadata", "Supply Control", "Instant Deploy", "Multi-Network"],
       popular: true
+    },
+    {
+      name: "Update Metadata",
+      icon: <LuEdit />,
+      description: "Modify existing token metadata including name, symbol, description, and visual assets with blockchain verification.",
+      function: setOpenUpdateMetadata,
+      color: "from-orange-500 to-red-500",
+      features: ["Edit Metadata", "Update Images", "IPFS Storage", "On-chain Update"],
+      popular: false
     },
     {
       name: "SOL Airdrop",
@@ -39,7 +49,7 @@ export const ToolView: FC = ({
       icon: <LuFileText />,
       description: "Explore and analyze comprehensive token metadata including verification, assets, and on-chain data.",
       function: setOpenTokenMetaData,
-      color: "from-orange-500 to-red-500",
+      color: "from-indigo-500 to-purple-500",
       features: ["Metadata Explorer", "On-chain Data", "Asset Viewer", "Verification"]
     },
     {
@@ -47,7 +57,7 @@ export const ToolView: FC = ({
       icon: <LuMail />,
       description: "Get expert help from our blockchain specialists with 24/7 support and comprehensive documentation.",
       function: setOpenContact,
-      color: "from-indigo-500 to-purple-500",
+      color: "from-teal-500 to-blue-500",
       features: ["24/7 Support", "Expert Help", "Fast Response", "Documentation"]
     },
     {
@@ -55,7 +65,7 @@ export const ToolView: FC = ({
       icon: <LuCoins />,
       description: "Advanced analytics and insights for your tokens including holder distribution and transaction history.",
       function: () => {},
-      color: "from-teal-500 to-blue-500",
+      color: "from-yellow-500 to-orange-500",
       features: ["Holder Analytics", "Transaction History", "Price Tracking", "Market Data"],
       comingSoon: true
     }

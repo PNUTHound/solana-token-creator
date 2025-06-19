@@ -9,3 +9,4 @@ export { CreateView } from "./create";
 export { InputView } from "./input";
 export { ToeknMetadata } from "./tokenMetadata";
 export { ContactView } from "./conatct";
+export { UpdateMetadataView } from "./updateMetadata";
