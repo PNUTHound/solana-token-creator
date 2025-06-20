@@ -5,7 +5,11 @@ import { LAMPORTS_PER_SOL, TransactionSignature } from "@solana/web3.js";
 import { notify } from "../../utils/notifications";
 import { LuGift, LuShield, LuZap, LuUsers } from "react-icons/lu";
 
-export const AirdropView: FC = ({ setOpenAirdrop }) => {
+interface AirdropViewProps {
+  setOpenAirdrop: (open: boolean) => void;
+}
+
+export const AirdropView: FC<AirdropViewProps> = ({ setOpenAirdrop }) => {
   const wallet = useWallet();
   const { connection } = useConnection();
   const { publicKey } = useWallet();

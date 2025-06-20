@@ -1,6 +1,12 @@
 import { FC } from "react";
 
-export const InputView: FC = ({ placeholder, name, clickhandle }) => {
+interface InputViewProps {
+  placeholder: string;
+  name: string;
+  clickhandle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const InputView: FC<InputViewProps> = ({ placeholder, name, clickhandle }) => {
   return (
     <div className="space-y-3">
       <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">

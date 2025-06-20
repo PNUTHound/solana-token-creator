@@ -1,7 +1,11 @@
 import { FC } from "react";
 import { LuRocket, LuShield, LuZap, LuUsers, LuArrowRight, LuStar, LuTrendingUp, LuCode, LuGlobe } from "react-icons/lu";
 
-export const HomeView: FC = ({ setOpenCreateModal }) => {
+interface HomeViewProps {
+  setOpenCreateModal: (open: boolean) => void;
+}
+
+export const HomeView: FC<HomeViewProps> = ({ setOpenCreateModal }) => {
   const stats = [
     { number: "10,000+", label: "Tokens Created", icon: <LuRocket /> },
     { number: "99.9%", label: "Success Rate", icon: <LuShield /> },
